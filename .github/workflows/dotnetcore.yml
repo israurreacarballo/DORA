@@ -31,7 +31,7 @@ jobs:
         echo "Version: ${{ steps.gitversion.outputs.SemVer }}"
         echo "CommitsSinceVersionSource: ${{ steps.gitversion.outputs.CommitsSinceVersionSource }}"
     - name: Setup .NET Core
-      uses: actions/setup-dotnet@v4.0.1
+      uses: actions/setup-dotnet@v4.3.1
       with:
         dotnet-version: 8.0.x
     
@@ -83,7 +83,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Setup .NET Core
-      uses: actions/setup-dotnet@v4.0.1
+      uses: actions/setup-dotnet@v4.3.1
       with:
         dotnet-version: 8.0.x
     #Run automated .NET tests   
@@ -114,7 +114,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Setup .NET Core
-      uses: actions/setup-dotnet@v4.0.1
+      uses: actions/setup-dotnet@v4.3.1
       with:
         dotnet-version: 8.0.x #Not a typo, the function is locked to a LTS version of .NET
     - name: .NET Publish Function
@@ -274,13 +274,13 @@ jobs:
         creds: ${{ secrets.AZURE_SP }}     
       #Swap staging slots with prod
     - name: Swap web service staging slot to production
-      uses: Azure/cli@v2.0.0
+      uses: Azure/cli@v2.1.0
       with:
         inlineScript: az webapp deployment slot swap --name "devops-prod-eu-service" --resource-group "devopsmetrics" --slot staging --target-slot production
     - name: Deploy web service app settings
       run: az webapp config appsettings set --name "devops-prod-eu-service" --resource-group "devopsmetrics" --settings "AppSettings:AzureDevOpsPatToken=${{ secrets.AzureDevOpsPATToken }}" "AppSettings:GitHubClientId=${{ secrets.GitHubClientId }}" "AppSettings:GitHubClientSecret=${{ secrets.GitHubClientSecret }}" "AppSettings:AzureStorageAccountConfigurationString=${{ secrets.AzureStorageConnectionString }}"     
     - name: Swap web site staging slot to production
-      uses: Azure/cli@v2.0.0
+      uses: Azure/cli@v2.1.0
       with:
         inlineScript: az webapp deployment slot swap --name "devops-prod-eu-web" --resource-group "devopsmetrics" --slot staging --target-slot production
     - name: Deploy website app settings
@@ -303,7 +303,7 @@ jobs:
 #    steps:
 #    - uses: actions/checkout@v4
 #    - name: Setup .NET Core
-#      uses: actions/setup-dotnet@v4.0.1
+#      uses: actions/setup-dotnet@v4.3.1
 #      with:
 #        dotnet-version: 3.1.101
 #    - name: .NET core Publish Azure DevOps Extension
