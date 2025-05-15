@@ -1,0 +1,82 @@
+﻿@using DevOpsMetrics.Core.Models.Common
+@model ChangeFailureRateModel
+
+@{
+    string widgetImageName = "";
+    string widgetName = "";
+    if (Model.TargetDevOpsPlatform == DevOpsPlatform.AzureDevOps)
+    {
+        widgetImageName = "AzureDevops-icon.png";
+        widgetName = "Azure DevOps";
+    }
+    else if (Model.TargetDevOpsPlatform == DevOpsPlatform.GitHub)
+    {
+        widgetImageName = "GitHub-icon.png";
+        widgetName = "GitHub";
+    }
+    else
+    {
+        widgetImageName = "Unknown-icon.png";
+        widgetName = "Unknown";
+    }
+}
+
+@* HTML based on example at https://codepen.io/vmz/pen/GpKbjm*@
+<div class="chartContainer vertical flat">
+    @if (Model.IsProjectView)
+    {
+        <h4>Change Failure Rate</h4>
+    }
+    else
+    {
+        <h4><img src="~/images/@widgetImageName" style="width:32px;" alt="Widget image name" />&nbsp; @widgetName - @Model.DeploymentName</h4>
+    }
+    @if (Model.Exception != null)
+    {
+        <div style="height:100px">
+            <span>This change failure rate cannot be displayed</span><br />
+            <span>There was an exception retreiving data from this <a href="@Model.ExceptionUrl" target="_blank">service request</a>.</span>
+        </div>
+    }
+    else if (Model.ChangeFailureRateBuildList.Count == 0)
+    {
+        <div style="height:100px">
+            <span>There is no data to display for this period</span>
+        </div>
+    }
+    else
+    {
+        foreach (ChangeFailureRateBuild item in Model.ChangeFailureRateBuildList)
+        {
+            string progressFillStatus = "";
+            if (item.DeploymentWasSuccessful)
+            {
+                progressFillStatus = "completed";
+            }
+            else
+            {
+                progressFillStatus = "failed";
+            }
+            <a href="@item.Url" target="_blank">
+                <div class="progress-bar">
+                    <div class="progress-track" title="Build @item.Id @item.Status @item.TimeSinceBuildCompleted (ran for @item.BuildDurationInMinutesAndSeconds)">
+                        <div class="progress-fill @progressFillStatus">
+                            <span>@item.BuildDurationPercent%</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        }
+    }
+</div>
+<div class="metricSpan">
+    <span style="font-size: 9pt;">Last @Model.MaxNumberOfItems completed deployments shown, out of @Model.TotalItems deployments, over last @Model.NumberOfDays days</span>
+</div>
+<div class="metricSpan">
+    @if (@Model.ChangeFailureRateMetric >= 0)
+    {
+        <b>Change failure rate:</b><span> @Model.ChangeFailureRateMetric.ToString("0.00%")</span><br />
+    }
+    <b>Change failure rate ranking:</b><span> @Model.ChangeFailureRateMetricDescription</span><br />
+    <b>Badge:</b> <img src="@Model.BadgeWithMetricURL" alt="Badge with metric image" />
+</div>

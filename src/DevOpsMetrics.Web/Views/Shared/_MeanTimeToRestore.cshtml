@@ -1,0 +1,81 @@
+﻿@using DevOpsMetrics.Core.Models.Common
+@model MeanTimeToRestoreModel
+
+@{
+    string widgetImageName = "";
+    string widgetName = "";
+    if (Model.TargetDevOpsPlatform == DevOpsPlatform.AzureDevOps)
+    {
+        widgetImageName = "AzureDevops-icon.png";
+        widgetName = "RG";
+    }
+    else if (Model.TargetDevOpsPlatform == DevOpsPlatform.GitHub)
+    {
+        widgetImageName = "GitHub-icon.png";
+        widgetName = "RG";
+    }
+    else
+    {
+        widgetImageName = "Unknown-icon.png";
+        widgetName = "RG";
+    }
+}
+
+@* HTML based on example at https://codepen.io/vmz/pen/GpKbjm*@
+<div class="chartContainer vertical flat">
+    @if (Model.IsProjectView)
+    {
+        <h4>Time to restore service</h4>
+    }
+    else
+    {
+        <h4><img src="~/images/@widgetImageName" style="width:32px;" alt="Widget image name" />&nbsp; @widgetName - @Model.ResourceGroup</h4>
+    }
+    @if (Model.Exception != null)
+    {
+        <div style="height:100px">
+            <span>This mean time to restore cannot be displayed</span><br />
+            <span>There was an exception retreiving data from this <a href="@Model.ExceptionUrl" target="_blank">service request</a>.</span>
+        </div>
+    }
+    else if (Model.MeanTimeToRestoreEvents.Count == 0)
+    {
+        <div style="height:100px">
+            <span>There is no data to display for this period</span>
+        </div>
+    }
+    else
+    {
+        foreach (MeanTimeToRestoreEvent item in Model.MeanTimeToRestoreEvents)
+        {
+            string description = $"Degradation event occured {item.StartTime.ToString("dd-MMM-yyyy")} (restored in {item.MTTRDurationInHours.ToString("0.00")} hours)";
+            if (item.EndTime == DateTime.MinValue)
+            {
+                description = $"Degradation event in progress, started at {item.StartTime.ToString("dd-MMM-yyyy")}";
+            }
+
+            <a href="@item.Url" target="_blank">
+                <div class="progress-bar">
+                    <div class="progress-track" title="@description">
+                        <div class="progress-fill @item.Status">
+                            <span>@item.MTTRDurationPercent%</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        }
+    }
+</div>
+<div class="metricSpan">
+    <span style="font-size: 9pt;">Last @Model.MaxNumberOfItems alerts shown, out of @Model.TotalItems alerts over last @Model.NumberOfDays days</span>
+</div>
+<div class="metricSpan">
+    <b>Mean time to restore:</b><span> @Model.MTTRAverageDurationInHours.ToString("0.00") hours</span><br />
+    <b>Time to restore ranking:</b><span> @Model.MTTRAverageDurationDescription</span><br />
+    <b>Badge:</b> <img src="@Model.BadgeWithMetricURL" alt="Badge with metric image" /><br />
+    @if (@Model.SLA >= 0)
+    {
+        <b>SLA: </b><span> @Model.SLA.ToString("0.00%")</span><br />
+    }
+    <b>SLA level: @Model.SLADescription</b>
+</div>

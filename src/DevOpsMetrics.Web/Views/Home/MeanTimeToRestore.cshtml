@@ -1,0 +1,64 @@
+﻿@using DevOpsMetrics.Core.Models.Common
+@model List<MeanTimeToRestoreModel>
+@{
+    ViewData["Title"] = "Time to restore service";
+}
+
+<h2>Time to restore service</h2>
+<div class="row">
+    @foreach (MeanTimeToRestoreModel item in Model)
+    {
+        <div class="col-md-6">
+            @await Html.PartialAsync("_MeanTimeToRestore", item)
+        </div>
+    }
+</div>
+<div class="row">
+    <div class="col-md-12" style="font-size: 10pt;">
+        <hr />
+        <b>Mean time to restore rating table</b><br />
+        <table class="table table-bordered">
+            <tr>
+                <th>Description</th>
+                <th>Elite</th>
+                <th>High</th>
+                <th>Medium</th>
+                <th>Low</th>
+            </tr>
+            <tr>
+                <td>For the primary application or service you work on, how long does it generally take to restore service when a service incident or a defect that impacts users occurs (e.g. unplanning outage or service impairment)</td>
+                <td>Less than one hour</td>
+                <td>Less than one day</td>
+                <td>Between one week and one month</td>
+                <td>More than one month</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="col-md-12" style="font-size: 10pt;">
+        <hr />
+        <b>FAQ</b><br />
+        <b>What am I looking at?</b><br />
+        Time to restore service is a high performing DevOps metric to measure the number the average time to restore service impairment or unplanned outages. This page helps us to measure it across various projects in Azure<br />
+        <b>How does it work?</b><br />
+        We setup Azure Monitor alerts on our resources, for example, on our web service, where we have an alerts for HTTP500 and HTTP403 errors, as well as monitoring CPU and RAM. If any of these alerts are triggered, we capture the alert in an Azure function, and save it into a Azure table storage, where we can aggregate and measure the time of the outage. When the alert is later resolved, this also triggers through the same workflow to save the the resolution and record the restoration of service. <br />
+        <b>Assumptions/things we can't currently measure:</b><br />
+        - Our project is hosted in Azure<br />
+        - The production environment is contained in a single resource group.<br />
+        - There are appropriate alerts setup on each of the resources, each with action groups to save the alert to Azure Storage <br />
+        <br />
+        <b>What is the SLA?</b><br />
+        This is an experiment, making a bold assumption that when the application is degraded, it is not available.<br />
+        <table>
+            <tr><th>SLA/uptime</th><th>Daily offline limit</th><th>Weekly offline limit</th></tr>
+            <tr><td>90.0%</td><td>2h 24m 0s</td><td>>16h 48m 0s</tr>
+            <tr><td>90.0%</td><td>2h 24m 0s</td><td>16h 48m 0s</tr>
+            <tr><td>99.0%</td><td>14m 24s</td><td>1h 40m 48s</tr>
+            <tr><td>99.9%</td><td>1m 26s</td><td>10m 4s</tr>
+            <tr><td>99.99%</td><td>8s</td><td>1m 0s</tr>
+            <tr><td>99.999%</td><td>0s</td><td>6s</tr>
+            <tr><td>99.9999%</td><td>0s</td><td>0s</tr>
+        </table>
+    </div>
+
+</div>

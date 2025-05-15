@@ -1,0 +1,79 @@
+﻿@using DevOpsMetrics.Core.Models.Common
+@model DeploymentFrequencyModel
+
+@{
+    string widgetImageName = "";
+    string widgetName = "";
+    if (Model.TargetDevOpsPlatform == DevOpsPlatform.AzureDevOps)
+    {
+        widgetImageName = "AzureDevops-icon.png";
+        widgetName = "Azure DevOps";
+    }
+    else if (Model.TargetDevOpsPlatform == DevOpsPlatform.GitHub)
+    {
+        widgetImageName = "GitHub-icon.png";
+        widgetName = "GitHub";
+    }
+    else
+    {
+        widgetImageName = "Unknown-icon.png";
+        widgetName = "Unknown";
+    }
+}
+
+@* HTML based on example at https://codepen.io/vmz/pen/GpKbjm*@
+<div class="chartContainer vertical flat">
+    @if (Model.IsProjectView)
+    {
+        <h4>Deployment frequency</h4>
+    }
+    else
+    {
+        <h4><img src="~/images/@widgetImageName" style="width:32px;" alt="Widget image name" />&nbsp; @widgetName - @Model.DeploymentName</h4>
+    }
+    @if (Model.Exception != null)
+    {
+        <div style="height:100px">
+            <span>This deployment frequency cannot be displayed</span><br />
+            <span>There was an exception retreiving data from this <a href="@Model.ExceptionUrl" target="_blank">service request</a>.</span>
+        </div>
+    }
+    else if (Model.RateLimitHit)
+    {
+        <div style="height:100px">
+            <span>API rate limit has been reached, please try again later</span>
+        </div>
+    }
+    else if (Model.BuildList.Count == 0)
+    {
+        <div style="height:100px">
+            <span>There is no data to display for this period</span>
+        </div>
+    }
+    else
+    {
+        foreach (Build item in Model.BuildList)
+        {
+            <a href="@item.Url" target="_blank">
+                <div class="progress-bar">
+                    <div class="progress-track" title="Build @item.Id @item.Status @item.TimeSinceBuildCompleted (ran for @item.BuildDurationInMinutesAndSeconds)">
+                        <div class="progress-fill @item.Status">
+                            <span>@item.BuildDurationPercent%</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        }
+    }
+</div>
+<div class="metricSpan">
+    <span style="font-size: 9pt;">Last @Model.MaxNumberOfItems completed builds shown, out of @Model.TotalItems builds over last @Model.NumberOfDays days</span>
+</div>
+@if (Model.RateLimitHit == false)
+{
+    <div class="metricSpan">
+        <b>Deployment frequency:</b><span> @Model.DeploymentsToDisplayMetric.ToString("0.00") @Model.DeploymentsToDisplayUnit</span><br />
+        <b>Deployment frequency ranking:</b><span> @Model.DeploymentsPerDayMetricDescription</span><br />
+        <b>Badge:</b> <img src="@Model.BadgeWithMetricURL" alt="Badge with metric image" />
+    </div>
+}

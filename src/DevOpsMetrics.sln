@@ -1,0 +1,82 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32929.385
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevOpsMetrics.Core", "DevOpsMetrics.Core\DevOpsMetrics.Core.csproj", "{274A42BF-52C4-4AD9-9A1C-E65076D7F81B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevOpsMetrics.Tests", "DevOpsMetrics.Tests\DevOpsMetrics.Tests.csproj", "{45B007AE-BB1B-44B4-AF74-36AEC955D907}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{97B5AD8C-80CA-4C4A-8F8E-264EAB873426}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		..\ReadmeImages\Architecture.png = ..\ReadmeImages\Architecture.png
+		..\ReadmeImages\ChangeFailureRate.png = ..\ReadmeImages\ChangeFailureRate.png
+		..\.github\workflows\codeql-analysis.yml = ..\.github\workflows\codeql-analysis.yml
+		..\.github\dependabot.yml = ..\.github\dependabot.yml
+		..\ReadmeImages\DeploymentFrequencyDemo.png = ..\ReadmeImages\DeploymentFrequencyDemo.png
+		..\.github\workflows\dotnetcore.yml = ..\.github\workflows\dotnetcore.yml
+		..\GitVersion.yml = ..\GitVersion.yml
+		..\ReadmeImages\LeadTimeForChanges.png = ..\ReadmeImages\LeadTimeForChanges.png
+		..\README.md = ..\README.md
+		..\ReadmeImages\TimeToRestoreService.png = ..\ReadmeImages\TimeToRestoreService.png
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevOpsMetrics.Service", "DevOpsMetrics.Service\DevOpsMetrics.Service.csproj", "{5F45E99B-F345-41B3-88D4-DFC50611EB89}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevOpsMetrics.Web", "DevOpsMetrics.Web\DevOpsMetrics.Web.csproj", "{432C7262-4877-400D-9719-A601C8F0FABD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevOpsMetrics.Function", "DevOpsMetrics.Function\DevOpsMetrics.Function.csproj", "{16C6AE31-8373-4F37-B291-AFDBE1829E3C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevOpsMetrics.FunctionalTests", "DevOpsMetrics.FunctionalTests\DevOpsMetrics.FunctionalTests.csproj", "{613B7F21-62CF-412F-BCF4-B0500EAE6FCB}"
+EndProject
+Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "DevOpsMetrics.Infrastructure", "DevOpsMetrics.Infrastructure\DevOpsMetrics.Infrastructure.deployproj", "{0465BF7A-C791-49CA-A7DE-27B4EECD2020}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevOpsMetrics.Cmd", "DevOpsMetrics.Cmd\DevOpsMetrics.Cmd.csproj", "{D15713F2-D089-45A7-A0FA-1F16D664130D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{274A42BF-52C4-4AD9-9A1C-E65076D7F81B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{274A42BF-52C4-4AD9-9A1C-E65076D7F81B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{274A42BF-52C4-4AD9-9A1C-E65076D7F81B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{274A42BF-52C4-4AD9-9A1C-E65076D7F81B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45B007AE-BB1B-44B4-AF74-36AEC955D907}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45B007AE-BB1B-44B4-AF74-36AEC955D907}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45B007AE-BB1B-44B4-AF74-36AEC955D907}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45B007AE-BB1B-44B4-AF74-36AEC955D907}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F45E99B-F345-41B3-88D4-DFC50611EB89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F45E99B-F345-41B3-88D4-DFC50611EB89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F45E99B-F345-41B3-88D4-DFC50611EB89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F45E99B-F345-41B3-88D4-DFC50611EB89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{432C7262-4877-400D-9719-A601C8F0FABD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{432C7262-4877-400D-9719-A601C8F0FABD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{432C7262-4877-400D-9719-A601C8F0FABD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{432C7262-4877-400D-9719-A601C8F0FABD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16C6AE31-8373-4F37-B291-AFDBE1829E3C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16C6AE31-8373-4F37-B291-AFDBE1829E3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16C6AE31-8373-4F37-B291-AFDBE1829E3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16C6AE31-8373-4F37-B291-AFDBE1829E3C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{613B7F21-62CF-412F-BCF4-B0500EAE6FCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{613B7F21-62CF-412F-BCF4-B0500EAE6FCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{613B7F21-62CF-412F-BCF4-B0500EAE6FCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{613B7F21-62CF-412F-BCF4-B0500EAE6FCB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0465BF7A-C791-49CA-A7DE-27B4EECD2020}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0465BF7A-C791-49CA-A7DE-27B4EECD2020}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0465BF7A-C791-49CA-A7DE-27B4EECD2020}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0465BF7A-C791-49CA-A7DE-27B4EECD2020}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D15713F2-D089-45A7-A0FA-1F16D664130D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D15713F2-D089-45A7-A0FA-1F16D664130D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D15713F2-D089-45A7-A0FA-1F16D664130D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D15713F2-D089-45A7-A0FA-1F16D664130D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0F221FAC-9282-46E8-8D4F-7129A3887E74}
+	EndGlobalSection
+EndGlobal

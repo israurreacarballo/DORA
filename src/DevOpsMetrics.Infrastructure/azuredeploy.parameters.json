@@ -1,0 +1,36 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "resourceLocation": {
+      "value": null
+    },
+    "storageName": {
+      "value": null
+    },
+    "hostingName": {
+      "value": null
+    },
+    "appInsightsName": {
+      "value": null
+    },
+    "websiteName": {
+      "value": null
+    },
+    "serviceName": {
+      "value": null
+    },
+    "functionName": {
+      "value": null
+    }
+  }
+}
+
+    [string] $resourceGroupName
+	[string] $resourceLocation,
+	[string] $storageName,
+	[string] $hostingName,
+	[string] $appInsightsName,
+	[string] $websiteName,
+	[string] $serviceName,
+	[string] $functionName

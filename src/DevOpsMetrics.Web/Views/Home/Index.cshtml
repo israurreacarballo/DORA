@@ -1,0 +1,67 @@
+﻿@using DevOpsMetrics.Core.Models.AzureDevOps;
+@using DevOpsMetrics.Core.Models.Common;
+@using DevOpsMetrics.Core.Models.GitHub;
+@model IndexViewModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<h2>High performing DevOps metrics</h2>
+<div class="row">
+    <div class="col-md-12">
+        View all projects by metric
+        <ul>
+            <li><a href="@Url.Action("DeploymentFrequency", "Home")">Deployment Frequency</a></li>
+            <li><a href="@Url.Action("LeadTimeForChanges", "Home")">Lead time for changes</a></li>
+            <li><a href="@Url.Action("MeanTimeToRestore", "Home")">Time to restore service</a></li>
+            <li><a href="@Url.Action("ChangeFailureRate", "Home")">Change failure rate</a></li>
+        </ul>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        View all metrics by project
+        <ul>
+            @foreach (AzureDevOpsSettings item in Model.AzureDevOpsSettings)
+            {
+                if (item.ShowSetting)
+                {
+                    <li>
+                        <img src="~/images/AzureDevops-icon.png" style="width:32px;" alt="Azure DevOps icon" />&nbsp; <a href="@Url.Action("Project", "Home", new { projectId = item.RowKey } )">@item.Project</a> | <a href="@Url.Action("RefreshMetric", "Home", new { projectId = item.RowKey } )" style="font-size:12px">Refresh metric</a>
+                        @if (item.RowKey == Model.ProjectId)
+                        {
+                            <br>
+                            <span style="font-size:12px">@Model.Log</span>
+                        }
+                    </li>
+                }
+            }
+            @foreach (GitHubSettings item in Model.GitHubSettings)
+            {
+                if (item.ShowSetting)
+                {
+                    <li>
+                        <img src="~/images/GitHub-icon.png" style="width:32px;" alt="GitHub icon" />&nbsp; <a href="@Url.Action("Project", "Home", new { projectId = item.RowKey })">@item.Repo</a> | <a href="@Url.Action("RefreshMetric", "Home", new { projectId = item.RowKey } )" style="font-size:12px">Refresh metric</a>
+                        @if (item.RowKey == Model.ProjectId)
+                        {
+                            <br>
+                            <span style="font-size:12px">@Model.Log</span>
+                        }
+                    </li>
+                }
+            }
+        </ul>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <ul>
+            <li><a href="@Url.Action("ChangeFailureRateUpdates", "Home")">Change failure rate updates</a></li>
+        </ul>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        Source code can be found at <a href="https://github.com/samsmithnz/DevOpsMetrics">https://github.com/samsmithnz/DevOpsMetrics</a>
+    </div>
+</div>
