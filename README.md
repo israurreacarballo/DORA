@@ -1,4 +1,4 @@
-# DevOps Metrics (forked and refactored)
+# DevOps Metrics 
 
 This is a personalized fork of the original DevOps Metrics project. I refactored the web front-end to improve testability, reduce duplication and modernize HTTP usage.
 
