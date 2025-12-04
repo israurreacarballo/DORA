@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace DevOpsMetrics.Web.Models
 {
-    public class ProjectViewModel
+    public class IsraProjectViewModel
     {
         public string RowKey
         {

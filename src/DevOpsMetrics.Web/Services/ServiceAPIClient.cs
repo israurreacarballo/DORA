@@ -6,23 +6,19 @@ using System.Threading.Tasks;
 using DevOpsMetrics.Core.Models.AzureDevOps;
 using DevOpsMetrics.Core.Models.Common;
 using DevOpsMetrics.Core.Models.GitHub;
-using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 
 namespace DevOpsMetrics.Web.Services
 {
-    public class ServiceApiClient
+    // Renamed original ServiceApiClient to a personal name 'IsraServiceClient' and implemented IServiceApiClient
+    public class IsraServiceClient : IServiceApiClient
     {
-        private readonly IConfiguration Configuration;
         private readonly HttpClient Client;
 
-        public ServiceApiClient(IConfiguration configuration)
+        // HttpClient is provided by the IHttpClientFactory (AddHttpClient)
+        public IsraServiceClient(HttpClient client)
         {
-            Configuration = configuration;
-            Client = new HttpClient
-            {
-                BaseAddress = new Uri(Configuration["AppSettings:WebServiceURL"])
-            };
+            Client = client ?? throw new ArgumentNullException(nameof(client));
         }
 
         public async Task<DeploymentFrequencyModel> GetAzureDevOpsDeploymentFrequency(bool getSampleData, string organization, string project, string repository, string branch, string buildName, string buildId, int numberOfDays, int maxNumberOfItems, bool useCache)

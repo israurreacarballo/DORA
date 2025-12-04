@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using DevOpsMetrics.Web.Services;
+using System;
 
 namespace DevOpsMetrics.Web
 {
@@ -23,6 +25,16 @@ namespace DevOpsMetrics.Web
         {
             services.AddControllersWithViews();
             services.AddApplicationInsightsTelemetry(Configuration["APPINSIGHTS_CONNECTIONSTRING"]);
+
+            // Register IsraServiceClient using IHttpClientFactory with base address from configuration
+            services.AddHttpClient<IsraServiceClient>(client =>
+            {
+                var baseUrl = Configuration["AppSettings:WebServiceURL"];
+                client.BaseAddress = new Uri(baseUrl);
+            });
+
+            // Map interface to implementation and use scoped lifetime
+            services.AddScoped<IServiceApiClient>(sp => sp.GetRequiredService<IsraServiceClient>());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
