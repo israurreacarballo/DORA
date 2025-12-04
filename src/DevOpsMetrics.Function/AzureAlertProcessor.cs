@@ -31,7 +31,7 @@ namespace DevOpsMetrics.Function
 
             //Process response
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            log.LogInformation($"C# HTTP trigger function processed request body {requestBody}.");
+            log.LogInformation($"C# HTTP trigger function processed request body {requestBody.Replace("\r", "").Replace("\n", "")}.");
 
             //save response to table
             //ServiceApiClient api = new ServiceApiClient(configuration);
